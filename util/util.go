@@ -1,6 +1,8 @@
 package util
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 
 	"github.com/astaxie/beego"
@@ -109,4 +111,10 @@ func LogNotice(v ...interface{}) {
 	if runMode == "dev" {
 		beego.Notice(v)
 	}
+}
+
+func Md5(str string) string {
+	h := md5.New()
+	h.Write([]byte(str))
+	return hex.EncodeToString(h.Sum(nil))
 }
