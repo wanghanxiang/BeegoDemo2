@@ -14,12 +14,13 @@ type RegisterController struct {
 }
 
 func (this *RegisterController) Get() {
-	//this.TplName = "register.html"
-	result := models.QueryUsersWightCon("")
-	fmt.Println("result:", result)
+	this.TplName = "register.html"
 
-	this.Data["json"] = map[string]interface{}{"code": 0, "message": result}
-	this.ServeJSON()
+	//result := models.QueryUsersWightCon("")
+	//fmt.Println("result:", result)
+
+	//this.Data["json"] = map[string]interface{}{"code": 0, "message": result}
+	//this.ServeJSON()
 	return
 
 }

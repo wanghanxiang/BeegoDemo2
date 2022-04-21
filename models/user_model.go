@@ -61,7 +61,7 @@ func QueryUsersWightCon(con string) []string {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer rows.Close()
+	defer rows.Close() //记得关闭游标
 
 	for rows.Next() {
 		var s string
