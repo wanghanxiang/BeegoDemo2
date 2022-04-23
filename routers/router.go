@@ -18,4 +18,10 @@ func init() {
 	//退出
 	beego.Router("/exit", &controllers.ExitController{})
 
+	//写文章
+	beego.Router("/article/add", &controllers.AddArticleController{})
+
+	//上传文件
+	beego.Router("/upload", &controllers.UploadController{})
+
 }
