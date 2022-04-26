@@ -29,7 +29,7 @@ func (this *AddArticleController) Post() {
 	fmt.Printf("title:%s,tags:%s\n", title, tags)
 
 	//实例化model，将它出入到数据库中
-	art := models.Article{0, title, tags, short, content, "千锋教育", time.Now().Unix()}
+	art := models.Article{0, title, tags, short, content, "xiangzaixiansheng", time.Now().Unix()}
 	_, err := models.AddArticle(art)
 
 	//返回数据给浏览器

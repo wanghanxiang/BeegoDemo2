@@ -1,9 +1,12 @@
 package util
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
+	"html/template"
 
 	"github.com/astaxie/beego"
 
@@ -12,7 +15,10 @@ import (
 	//引入缓存模块
 	"os"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/astaxie/beego/cache"
+	"github.com/russross/blackfriday"
+	"github.com/sourcegraph/syntaxhighlight"
 )
 
 const PAGELIMIT = 20
@@ -126,4 +132,30 @@ func Md5(str string) string {
 	h := md5.New()
 	h.Write([]byte(str))
 	return hex.EncodeToString(h.Sum(nil))
+}
+
+/**
+ * 将文章详情的内容，转换成HTMl语句
+ */
+func SwitchMarkdownToHtml(content string) template.HTML {
+
+	markdown := blackfriday.MarkdownCommon([]byte(content))
+
+	//获取到html文档
+	doc, _ := goquery.NewDocumentFromReader(bytes.NewReader(markdown))
+
+	/**
+	对document进程查询，选择器和css的语法一样
+	第一个参数：i是查询到的第几个元素
+	第二个参数：selection就是查询到的元素
+	*/
+	doc.Find("code").Each(func(i int, selection *goquery.Selection) {
+		light, _ := syntaxhighlight.AsHTML([]byte(selection.Text()))
+		selection.SetHtml(string(light))
+		fmt.Println(selection.Html())
+		fmt.Println("light:", string(light))
+		fmt.Println("\n\n\n")
+	})
+	htmlString, _ := doc.Html()
+	return template.HTML(htmlString)
 }
