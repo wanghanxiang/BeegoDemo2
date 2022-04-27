@@ -3,6 +3,7 @@ package models
 import (
 	"BeegoDemo2/util"
 	"fmt"
+	"log"
 	"strconv"
 
 	"github.com/astaxie/beego"
@@ -156,4 +157,42 @@ func QueryArticleWithId(id int) Article {
 	row.Scan(&id, &title, &tags, &short, &content, &author, &createtime)
 	art := Article{id, title, tags, short, content, author, createtime}
 	return art
+}
+
+//----------修改数据----------
+func UpdateArticle(article Article) (int64, error) {
+	//数据库操作
+	// update article set title = ?, tags = ?, short = ?, content = ?  where id = ?
+	return util.ModifyDB("update article set title=?,tags=?,short=?,content=? where id=?",
+		article.Title, article.Tags, article.Short, article.Content, article.Id)
+}
+
+//----------删除文章---------
+func DeleteArticle(artID int) (int64, error) {
+	//1、删除文章
+	i, err := deleteArticleWithArtId(artID)
+	//2、计算文章总页码数
+	SetArticleRowsNum()
+	return i, err
+}
+
+// delete from article where id = artID
+func deleteArticleWithArtId(artID int) (int64, error) {
+	return util.ModifyDB("delete from article where id=?", artID)
+}
+
+//查询标签，返回一个字段的列表
+func QueryArticleWithParam(param string) []string {
+	// select tags from article
+	rows, err := util.Query(fmt.Sprintf("select %s from article", param))
+	if err != nil {
+		log.Println(err)
+	}
+	var paramList []string
+	for rows.Next() {
+		arg := ""
+		rows.Scan(&arg)
+		paramList = append(paramList, arg)
+	}
+	return paramList
 }

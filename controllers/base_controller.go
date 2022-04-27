@@ -24,7 +24,8 @@ func (this *BaseController) Prepare() {
 		this.IsLogin = true
 		this.Loginuser = loginuser
 	} else {
-		this.IsLogin = false
+		//this.IsLogin = false
+		this.IsLogin = true
 	}
 	this.Data["IsLogin"] = this.IsLogin
 }
