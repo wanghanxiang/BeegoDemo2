@@ -41,4 +41,7 @@ func init() {
 	//标签
 	beego.Router("/tags", &controllers.TagsController{})
 
+	//关于我页面
+	beego.Router("/aboutme", &controllers.AboutMeController{})
+
 }

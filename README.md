@@ -13,3 +13,7 @@ MySQL： github.com/go-sql-driver/mysql
 PostgreSQL：github.com/lib/pq
 
 Sqlite3：github.com/mattn/go-sqlite3
+
+
+
+docker build -t beegodemo:v1 .
