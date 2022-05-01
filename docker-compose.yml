@@ -1,0 +1,18 @@
+
+version: '2.2'
+
+services:
+  beegodemo:
+    build: .
+    container_name: beegodemo-server-1 # 容器名称
+    restart: always
+    ports:
+     - "8080:8080" 
+    network_mode: host #使用主机的localhost
+    #volumes:
+    # - /mnt/data/wwwroot/gm_mybeego/htdocs/:/go/src/
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456 
+
+    # command: /bin/sh -c "chmod a+x /go/src/mybeego"
+    command: bee run
